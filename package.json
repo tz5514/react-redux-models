@@ -1,0 +1,21 @@
+{
+  "name": "react-redux-models",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "babel src --out-dir dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Zet Chou (tz5514@gmail.com)",
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "^6.24.1",
+    "babel-preset-env": "^1.5.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "lodash": "^4.17.4",
+    "react-redux": "^5.0.5",
+    "redux": "^3.6.0",
+    "reselect": "^3.0.1"
+  }
+}
