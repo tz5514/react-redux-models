@@ -9,6 +9,16 @@
   },
   "author": "Zet Chou (tz5514@gmail.com)",
   "license": "ISC",
+  "repository" :{ 
+    "type" : "git",
+    "url" : "https://github.com/tz5514/react-redux-models.git"
+  },
+  "keywords": [
+    "redux",
+    "react-redux",
+    "redux-model",
+    "reducer"
+  ],
   "dependencies": {
     "babel-core": "^6.24.1",
     "babel-preset-env": "^1.5.1",
