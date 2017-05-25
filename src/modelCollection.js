@@ -1,3 +1,5 @@
+import combineModelReducers from './combineModelReducers'
+
 let models = {};
 
 function registerModel(...pendingModels) {
@@ -12,5 +14,5 @@ export function getModels() {
 
 export function registerModelAndGenerateReducer({ models, generateReducer }) {
   registerModel(...models);
-  return generateReducer();
+  return combineModelReducers(generateReducer());
 }
