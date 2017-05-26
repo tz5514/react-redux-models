@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.createActionTypes = exports.createStoreAndConnectModel = exports.connectModel = exports.getModels = exports.registerModelAndGenerateReducer = exports.combineModelReducers = undefined;
+exports.fetchTypes = exports.createActionTypes = exports.createStoreAndConnectModel = exports.connectModel = exports.getModels = exports.registerModelAndGenerateReducer = exports.combineModelReducers = undefined;
 
 var _modelCollection = require('./modelCollection');
 
@@ -31,3 +31,4 @@ exports.getModels = _modelCollection.getModels;
 exports.connectModel = _connectModel2.default;
 exports.createStoreAndConnectModel = _createStoreAndConnectModel2.default;
 exports.createActionTypes = _createActionTypes2.default;
+exports.fetchTypes = _createActionTypes.fetchTypes;

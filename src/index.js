@@ -2,7 +2,7 @@ import { registerModelAndGenerateReducer, getModels } from './modelCollection'
 import combineModelReducers from './combineModelReducers'
 import connectModel, { getCombinedActions, getCombinedComputedValues } from './connectModel'
 import createStoreAndConnectModel from './createStoreAndConnectModel'
-import createActionTypes from './createActionTypes'
+import createActionTypes, { fetchTypes } from './createActionTypes'
 
 export {
   combineModelReducers,
@@ -10,5 +10,6 @@ export {
   getModels,
   connectModel,  
   createStoreAndConnectModel,
-  createActionTypes
+  createActionTypes,
+  fetchTypes
 }
