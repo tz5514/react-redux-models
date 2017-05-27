@@ -2,7 +2,7 @@ import combineModelReducers from './combineModelReducers'
 
 let models = {};
 
-function registerModel(...pendingModels) {
+export function registerModel(...pendingModels) {
   pendingModels.forEach(model => {
     models[model.modelName] = model;
   });
@@ -10,9 +10,4 @@ function registerModel(...pendingModels) {
 
 export function getModels() {
   return models;
-}
-
-export function registerModelAndGenerateReducer({ models, generateReducer }) {
-  registerModel(...models);
-  return combineModelReducers(generateReducer());
 }

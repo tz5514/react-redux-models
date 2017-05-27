@@ -1,15 +1,18 @@
-import { registerModelAndGenerateReducer, getModels } from './modelCollection'
+import { registerModel, getModels } from './modelCollection'
 import combineModelReducers from './combineModelReducers'
-import connectModel, { getCombinedActions, getCombinedComputedValues } from './connectModel'
+import connectModel from './connectModel'
 import createStoreAndConnectModel from './createStoreAndConnectModel'
-import createActionTypes, { fetchTypes } from './createActionTypes'
+import createActionTypes, { FETCH_ACTION_TYPES } from './createActionTypes'
 
 export {
-  combineModelReducers,
-  registerModelAndGenerateReducer,
+  registerModel,
   getModels,
-  connectModel,  
+
+  combineModelReducers,
+  
+  connectModel, 
   createStoreAndConnectModel,
+
   createActionTypes,
-  fetchTypes
+  FETCH_ACTION_TYPES
 }

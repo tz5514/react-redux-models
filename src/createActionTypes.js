@@ -2,7 +2,7 @@ import isNull from 'lodash/isNull'
 import forEach from 'lodash/forEach'
 import flattenDeep from 'lodash/flattenDeep'
 
-export const fetchTypes = ['REQUEST', 'SUCCESS', 'ERROR'];
+export const FETCH_ACTION_TYPES = ['REQUEST', 'SUCCESS', 'ERROR'];
 
 export default function createActionTypes(...args) {
   let types, prefix, actionTypes = {};
@@ -13,7 +13,7 @@ export default function createActionTypes(...args) {
     prefix = `${args[0]}.`;
     types = args[1];
   } else {
-    new Error('Invalid parameters');
+    throw new Error('Invalid parameters.');
   }
 
   forEach(types, (type, key) => {

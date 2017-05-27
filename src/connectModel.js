@@ -10,8 +10,6 @@ import reduce from 'lodash/reduce'
 
 import { getModels } from './modelCollection'
 
-
-
 export default function connectModel({ stateSelector, actions, computedValues, alwaysMixinDispatch = false }) {
   let connectParams = [];
   const models = getModels();
@@ -77,7 +75,7 @@ export function getCombinedActions(actionOptions) {
     }
   });
 
-  const combinedActions = reduceObjectAndMerge(modelActionsObject);
+  const combinedActions = reduceAndMergeObject(modelActionsObject);
   // console.log(combinedActions);
 
   return combinedActions;
@@ -111,13 +109,13 @@ export function getCombinedComputedValues(computedValueOptions) {
     }
   });
 
-  const combinedComputedValues = reduceObjectAndMerge(modelComputedValuesObject);
+  const combinedComputedValues = reduceAndMergeObject(modelComputedValuesObject);
   // console.log(combinedComputedValues);
 
   return combinedComputedValues;
 }
 
-function reduceObjectAndMerge(object) {
+function reduceAndMergeObject(object) {
   return reduce(object, (prev, current) => Object.assign({}, prev, current), {});
 }
 
