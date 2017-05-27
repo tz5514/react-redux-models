@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchTypes = undefined;
+exports.FETCH_ACTION_TYPES = undefined;
 exports.default = createActionTypes;
 
 var _isNull = require('lodash/isNull');
@@ -20,7 +20,7 @@ var _flattenDeep2 = _interopRequireDefault(_flattenDeep);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var fetchTypes = exports.fetchTypes = ['REQUEST', 'SUCCESS', 'ERROR'];
+var FETCH_ACTION_TYPES = exports.FETCH_ACTION_TYPES = ['REQUEST', 'SUCCESS', 'ERROR'];
 
 function createActionTypes() {
   var types = void 0,
@@ -33,7 +33,7 @@ function createActionTypes() {
     prefix = (arguments.length <= 0 ? undefined : arguments[0]) + '.';
     types = arguments.length <= 1 ? undefined : arguments[1];
   } else {
-    new Error('Invalid parameters');
+    throw new Error('Invalid parameters.');
   }
 
   (0, _forEach2.default)(types, function (type, key) {

@@ -109,7 +109,7 @@ function getCombinedActions(actionOptions) {
     }
   });
 
-  var combinedActions = reduceObjectAndMerge(modelActionsObject);
+  var combinedActions = reduceAndMergeObject(modelActionsObject);
   // console.log(combinedActions);
 
   return combinedActions;
@@ -145,13 +145,13 @@ function getCombinedComputedValues(computedValueOptions) {
     }
   });
 
-  var combinedComputedValues = reduceObjectAndMerge(modelComputedValuesObject);
+  var combinedComputedValues = reduceAndMergeObject(modelComputedValuesObject);
   // console.log(combinedComputedValues);
 
   return combinedComputedValues;
 }
 
-function reduceObjectAndMerge(object) {
+function reduceAndMergeObject(object) {
   return (0, _reduce2.default)(object, function (prev, current) {
     return Object.assign({}, prev, current);
   }, {});

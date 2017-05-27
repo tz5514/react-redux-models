@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchTypes = exports.createActionTypes = exports.createStoreAndConnectModel = exports.connectModel = exports.getModels = exports.registerModelAndGenerateReducer = exports.combineModelReducers = undefined;
+exports.FETCH_ACTION_TYPES = exports.createActionTypes = exports.createStoreAndConnectModel = exports.connectModel = exports.combineModelReducers = exports.getModels = exports.registerModel = undefined;
 
 var _modelCollection = require('./modelCollection');
 
@@ -25,10 +25,10 @@ var _createActionTypes2 = _interopRequireDefault(_createActionTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.combineModelReducers = _combineModelReducers2.default;
-exports.registerModelAndGenerateReducer = _modelCollection.registerModelAndGenerateReducer;
+exports.registerModel = _modelCollection.registerModel;
 exports.getModels = _modelCollection.getModels;
+exports.combineModelReducers = _combineModelReducers2.default;
 exports.connectModel = _connectModel2.default;
 exports.createStoreAndConnectModel = _createStoreAndConnectModel2.default;
 exports.createActionTypes = _createActionTypes2.default;
-exports.fetchTypes = _createActionTypes.fetchTypes;
+exports.FETCH_ACTION_TYPES = _createActionTypes.FETCH_ACTION_TYPES;
