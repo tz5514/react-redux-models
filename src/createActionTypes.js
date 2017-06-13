@@ -1,8 +1,8 @@
-import isNull from 'lodash/isNull'
+import isPlainObject from 'lodash/isPlainObject'
 import forEach from 'lodash/forEach'
 import flattenDeep from 'lodash/flattenDeep'
 
-export const FETCH_ACTION_TYPES = ['REQUEST', 'SUCCESS', 'ERROR'];
+export const AJAX_ACTION_TYPES = ['REQUEST', 'SUCCESS', 'ERROR', 'CANCEL'];
 
 export default function createActionTypes(...args) {
   let types, prefix, actionTypes = {};
@@ -16,16 +16,34 @@ export default function createActionTypes(...args) {
     throw new Error('Invalid parameters.');
   }
 
-  forEach(types, (type, key) => {
-    if (isNull(type)) {
-      actionTypes[key] = `${prefix}${key}`;
-    } else if (Array.isArray(type)) {
+  if (Array.isArray(types)) {
+    return getTypesFromArray(types, prefix);
+  } else if (isPlainObject(types)) {
+    return getTypesFromObject(types, prefix);
+  }
+}
+
+function getTypesFromArray(typesArray, prefix) {
+  let actionTypes = {};
+  forEach(typesArray, (type) => {
+    if (typeof type == 'string') {
+      actionTypes[type] = `${prefix}${type}`;
+    } else if (isPlainObject(type)) {
+      Object.assign(actionTypes, getTypesFromObject(type, prefix));
+    }
+  });
+  return actionTypes;
+}
+
+function getTypesFromObject(typesObject, prefix) {
+  let actionTypes = {};
+  forEach(typesObject, (type, key) => {
+    if (Array.isArray(type)) {
       actionTypes[key] = {};
       flattenDeep(type).forEach(status => {
         actionTypes[key][status] = `${prefix}${key}.${status}`
       })
     }
   });
-  
   return actionTypes;
 }

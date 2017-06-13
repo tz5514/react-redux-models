@@ -1,18 +1,17 @@
-import { registerModel, getModels } from './modelCollection'
 import combineModelReducers from './combineModelReducers'
 import connectModel from './connectModel'
-import createStoreAndConnectModel from './createStoreAndConnectModel'
-import createActionTypes, { FETCH_ACTION_TYPES } from './createActionTypes'
+import wrapProvider from './wrapProvider'
+import createActionTypes, { AJAX_ACTION_TYPES } from './createActionTypes'
+import createStore from './createStore'
+import Model from './Model'
 
 export {
-  registerModel,
-  getModels,
-
+  wrapProvider,  
+  createStore,  
   combineModelReducers,
-  
   connectModel, 
-  createStoreAndConnectModel,
+  Model,
 
   createActionTypes,
-  FETCH_ACTION_TYPES
+  AJAX_ACTION_TYPES,
 }

@@ -3,9 +3,20 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = connectModel;
-exports.getCombinedActions = getCombinedActions;
-exports.getCombinedComputedValues = getCombinedComputedValues;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+exports.connect = connect;
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _redux = require('redux');
 
@@ -13,9 +24,17 @@ var _reactRedux = require('react-redux');
 
 var _reselect = require('reselect');
 
+var _hoistNonReactStatics = require('hoist-non-react-statics');
+
+var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
+
 var _pickBy = require('lodash/pickBy');
 
 var _pickBy2 = _interopRequireDefault(_pickBy);
+
+var _map = require('lodash/map');
+
+var _map2 = _interopRequireDefault(_map);
 
 var _mapValues = require('lodash/mapValues');
 
@@ -29,44 +48,82 @@ var _isPlainObject = require('lodash/isPlainObject');
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-var _reduce = require('lodash/reduce');
-
-var _reduce2 = _interopRequireDefault(_reduce);
-
-var _modelCollection = require('./modelCollection');
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function connectModel(_ref) {
-  var stateSelector = _ref.stateSelector,
-      actions = _ref.actions,
-      computedValues = _ref.computedValues,
-      _ref$alwaysMixinDispa = _ref.alwaysMixinDispatch,
-      alwaysMixinDispatch = _ref$alwaysMixinDispa === undefined ? false : _ref$alwaysMixinDispa;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var connectModel = function connectModel(options) {
+  return function (WrappedComponent) {
+    var ConnectModel = function (_React$PureComponent) {
+      _inherits(ConnectModel, _React$PureComponent);
+
+      function ConnectModel() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, ConnectModel);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ConnectModel.__proto__ || Object.getPrototypeOf(ConnectModel)).call.apply(_ref, [this].concat(args))), _this), _this.ConnectWrapper = connect(_extends({}, options, {
+          store: _this.context.store
+        }))(WrappedComponent), _temp), _possibleConstructorReturn(_this, _ret);
+      }
+
+      _createClass(ConnectModel, [{
+        key: 'render',
+        value: function render() {
+          return _react2.default.createElement(this.ConnectWrapper, this.props);
+        }
+      }]);
+
+      return ConnectModel;
+    }(_react2.default.PureComponent);
+
+    ConnectModel.contextTypes = {
+      store: _propTypes2.default.object
+    };
+
+
+    (0, _hoistNonReactStatics2.default)(ConnectModel, WrappedComponent);
+    return ConnectModel;
+  };
+};
+
+function connect(_ref2) {
+  var store = _ref2.store,
+      stateSelector = _ref2.stateSelector,
+      actionOptions = _ref2.actions,
+      computedValueOptions = _ref2.computedValues,
+      _ref2$importDispatch = _ref2.importDispatch,
+      importDispatch = _ref2$importDispatch === undefined ? false : _ref2$importDispatch;
 
   var connectParams = [];
-  var models = (0, _modelCollection.getModels)();
-
-  var actionOptions = actions;
-  var computedValueOptions = computedValues;
 
   // actions    
   if ((0, _isPlainObject2.default)(actionOptions) && !(0, _isEmpty2.default)(actionOptions)) {
-    var combinedActions = getCombinedActions(actionOptions);
-
     // generate mapDispatchToProps function from combinedActions
     connectParams[1] = function (dispatch) {
-      var dispatchObject = alwaysMixinDispatch ? { dispatch: dispatch } : {};
-      return Object.assign(dispatchObject, { actions: (0, _redux.bindActionCreators)(combinedActions, dispatch) });
+      var dispatchObject = importDispatch ? { dispatch: dispatch } : {};
+      return Object.assign(dispatchObject, { actions: store.getActions(actionOptions) });
+    };
+  } else {
+    connectParams[1] = function (dispatch) {
+      return importDispatch ? { dispatch: dispatch } : {};
     };
   }
 
   // computedValues
   if ((0, _isPlainObject2.default)(computedValueOptions) && !(0, _isEmpty2.default)(computedValueOptions)) {
-    var combinedComputedValues = getCombinedComputedValues(computedValueOptions);
-
     connectParams[0] = function (state) {
-      var reselectedComputedValues = (0, _mapValues2.default)(combinedComputedValues, function (computedValue) {
+      var reselectedComputedValues = (0, _mapValues2.default)(store.getComputedValues(computedValueOptions), function (computedValue) {
         return (0, _reselect.createSelector)(computedValue.selectors, computedValue.compute)(state);
       });
 
@@ -79,80 +136,4 @@ function connectModel(_ref) {
   return _reactRedux.connect.apply(undefined, connectParams);
 }
 
-function getCombinedActions(actionOptions) {
-  var models = (0, _modelCollection.getModels)();
-  var modelActionsObject = (0, _mapValues2.default)(actionOptions, function (neededActionNames, modelName) {
-    if (!models[modelName]) {
-      throw new Error('Model "' + modelName + '" was undefined.');
-    }
-
-    if (!models[modelName].actions) {
-      throw new Error('actions of model "' + modelName + '" was undefined.');
-    }
-
-    var currentModelActions = models[modelName].actions;
-
-    if (neededActionNames === 'all') {
-      return currentModelActions;
-    } else if (Array.isArray(neededActionNames)) {
-      var currentModelActionNames = Object.keys(currentModelActions);
-      neededActionNames.forEach(function (actionName) {
-        if (!currentModelActionNames.includes(actionName)) {
-          throw new Error('action "' + actionName + '" of model "' + modelName + '" was undefined.');
-        }
-      });
-      return (0, _pickBy2.default)(currentModelActions, function (val, actionName) {
-        return neededActionNames.includes(actionName);
-      });
-    } else {
-      throw new Error('Input for needed actions of model "' + modelName + '" was invalid. It should be a string \'all\', or an array of action names.');
-    }
-  });
-
-  var combinedActions = reduceAndMergeObject(modelActionsObject);
-  // console.log(combinedActions);
-
-  return combinedActions;
-}
-
-function getCombinedComputedValues(computedValueOptions) {
-  var models = (0, _modelCollection.getModels)();
-  var modelComputedValuesObject = (0, _mapValues2.default)(computedValueOptions, function (neededComputedValueNames, modelName) {
-    if (!models[modelName]) {
-      throw new Error('Model "' + modelName + '" was undefined.');
-    }
-
-    if (!models[modelName].computedValues) {
-      throw new Error('computedValues of model "' + modelName + '" was undefined.');
-    }
-
-    var currentModelComputedValues = models[modelName].computedValues;
-
-    if (neededComputedValueNames === 'all') {
-      return currentModelComputedValues;
-    } else if (Array.isArray(neededComputedValueNames)) {
-      var currentModelComputedValueNames = Object.keys(currentModelComputedValues);
-      neededComputedValueNames.forEach(function (computedValueName) {
-        if (!currentModelComputedValueNames.includes(computedValueName)) {
-          throw new Error('computedValue "' + computedValueName + '" of model "' + modelName + '" was undefined.');
-        }
-      });
-      return (0, _pickBy2.default)(currentModelComputedValues, function (val, computedValueName) {
-        return neededComputedValueNames.includes(computedValueName);
-      });
-    } else {
-      throw new Error('Input for needed computedValues of model "' + modelName + '" was invalid. It should be a string \'all\', or an array of computedValue names.');
-    }
-  });
-
-  var combinedComputedValues = reduceAndMergeObject(modelComputedValuesObject);
-  // console.log(combinedComputedValues);
-
-  return combinedComputedValues;
-}
-
-function reduceAndMergeObject(object) {
-  return (0, _reduce2.default)(object, function (prev, current) {
-    return Object.assign({}, prev, current);
-  }, {});
-}
+exports.default = connectModel;

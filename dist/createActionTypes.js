@@ -3,12 +3,12 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.FETCH_ACTION_TYPES = undefined;
+exports.AJAX_ACTION_TYPES = undefined;
 exports.default = createActionTypes;
 
-var _isNull = require('lodash/isNull');
+var _isPlainObject = require('lodash/isPlainObject');
 
-var _isNull2 = _interopRequireDefault(_isNull);
+var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
 var _forEach = require('lodash/forEach');
 
@@ -20,7 +20,7 @@ var _flattenDeep2 = _interopRequireDefault(_flattenDeep);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var FETCH_ACTION_TYPES = exports.FETCH_ACTION_TYPES = ['REQUEST', 'SUCCESS', 'ERROR'];
+var AJAX_ACTION_TYPES = exports.AJAX_ACTION_TYPES = ['REQUEST', 'SUCCESS', 'ERROR', 'CANCEL'];
 
 function createActionTypes() {
   var types = void 0,
@@ -36,16 +36,34 @@ function createActionTypes() {
     throw new Error('Invalid parameters.');
   }
 
-  (0, _forEach2.default)(types, function (type, key) {
-    if ((0, _isNull2.default)(type)) {
-      actionTypes[key] = '' + prefix + key;
-    } else if (Array.isArray(type)) {
+  if (Array.isArray(types)) {
+    return getTypesFromArray(types, prefix);
+  } else if ((0, _isPlainObject2.default)(types)) {
+    return getTypesFromObject(types, prefix);
+  }
+}
+
+function getTypesFromArray(typesArray, prefix) {
+  var actionTypes = {};
+  (0, _forEach2.default)(typesArray, function (type) {
+    if (typeof type == 'string') {
+      actionTypes[type] = '' + prefix + type;
+    } else if ((0, _isPlainObject2.default)(type)) {
+      Object.assign(actionTypes, getTypesFromObject(type, prefix));
+    }
+  });
+  return actionTypes;
+}
+
+function getTypesFromObject(typesObject, prefix) {
+  var actionTypes = {};
+  (0, _forEach2.default)(typesObject, function (type, key) {
+    if (Array.isArray(type)) {
       actionTypes[key] = {};
       (0, _flattenDeep2.default)(type).forEach(function (status) {
         actionTypes[key][status] = '' + prefix + key + '.' + status;
       });
     }
   });
-
   return actionTypes;
 }

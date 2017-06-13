@@ -2,31 +2,29 @@ import { combineReducers } from 'redux'
 import mapValues from 'lodash/mapValues'
 import isPlainObject from 'lodash/isPlainObject'
 
-import { getModels } from './modelCollection'
-
-export default function combineModelReducers(object) {
-  const models = getModels();
-  const transformedReducers = mapValues(object, (value, key) => {
+export default function combineModelReducers(modelIntances, reducerStuctrue) {
+  const transformedReducers = mapValues(reducerStuctrue, (value, key) => {
     if (typeof value == 'string') {
       const modelName = value;
-      const model = models[modelName];
+      const modelIntance = modelIntances[modelName];
 
-      if (!model) {
+      if (!modelIntance) {
         throw new Error(`Model "${modelName}" was undefined.`);
       }
 
-      if (!model.initialState || !model.reducers) {
+      if (!modelIntance.initialState || !modelIntance.reducers) {
         throw new Error(`Model "${modelName}" muse has declared initialState and reducers.`);
       }
 
-      return (state = model.initialState, action) => {
-        const reducerFunction = model.reducers[action.type];
-        return (reducerFunction)? reducerFunction(state, action) : state;
+      return (state = modelIntance.initialState, action) => {
+        const reducerFunction = modelIntance.reducers[action.type];
+        const result = (reducerFunction)? reducerFunction(state, action) : state;
+        return (result) ? result : state;
       }
     } else if (typeof value == 'function'){
       return value;
     } else if (isPlainObject(value)) {
-      return combineModelReducers(value);
+      return combineModelReducers(modelIntances, value);
     } else {
       throw new Error("The object's each value must be a modelName string or reducer function, or a nested object structure.");
     }

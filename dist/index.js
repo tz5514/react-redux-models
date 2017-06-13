@@ -3,9 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.FETCH_ACTION_TYPES = exports.createActionTypes = exports.createStoreAndConnectModel = exports.connectModel = exports.combineModelReducers = exports.getModels = exports.registerModel = undefined;
-
-var _modelCollection = require('./modelCollection');
+exports.AJAX_ACTION_TYPES = exports.createActionTypes = exports.Model = exports.connectModel = exports.combineModelReducers = exports.createStore = exports.wrapProvider = undefined;
 
 var _combineModelReducers = require('./combineModelReducers');
 
@@ -15,20 +13,28 @@ var _connectModel = require('./connectModel');
 
 var _connectModel2 = _interopRequireDefault(_connectModel);
 
-var _createStoreAndConnectModel = require('./createStoreAndConnectModel');
+var _wrapProvider = require('./wrapProvider');
 
-var _createStoreAndConnectModel2 = _interopRequireDefault(_createStoreAndConnectModel);
+var _wrapProvider2 = _interopRequireDefault(_wrapProvider);
 
 var _createActionTypes = require('./createActionTypes');
 
 var _createActionTypes2 = _interopRequireDefault(_createActionTypes);
 
+var _createStore = require('./createStore');
+
+var _createStore2 = _interopRequireDefault(_createStore);
+
+var _Model = require('./Model');
+
+var _Model2 = _interopRequireDefault(_Model);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.registerModel = _modelCollection.registerModel;
-exports.getModels = _modelCollection.getModels;
+exports.wrapProvider = _wrapProvider2.default;
+exports.createStore = _createStore2.default;
 exports.combineModelReducers = _combineModelReducers2.default;
 exports.connectModel = _connectModel2.default;
-exports.createStoreAndConnectModel = _createStoreAndConnectModel2.default;
+exports.Model = _Model2.default;
 exports.createActionTypes = _createActionTypes2.default;
-exports.FETCH_ACTION_TYPES = _createActionTypes.FETCH_ACTION_TYPES;
+exports.AJAX_ACTION_TYPES = _createActionTypes.AJAX_ACTION_TYPES;

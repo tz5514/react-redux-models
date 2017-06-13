@@ -15,36 +15,34 @@ var _isPlainObject = require('lodash/isPlainObject');
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-var _modelCollection = require('./modelCollection');
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function combineModelReducers(object) {
-  var models = (0, _modelCollection.getModels)();
-  var transformedReducers = (0, _mapValues2.default)(object, function (value, key) {
+function combineModelReducers(modelIntances, reducerStuctrue) {
+  var transformedReducers = (0, _mapValues2.default)(reducerStuctrue, function (value, key) {
     if (typeof value == 'string') {
       var modelName = value;
-      var model = models[modelName];
+      var modelIntance = modelIntances[modelName];
 
-      if (!model) {
+      if (!modelIntance) {
         throw new Error('Model "' + modelName + '" was undefined.');
       }
 
-      if (!model.initialState || !model.reducers) {
+      if (!modelIntance.initialState || !modelIntance.reducers) {
         throw new Error('Model "' + modelName + '" muse has declared initialState and reducers.');
       }
 
       return function () {
-        var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : model.initialState;
+        var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : modelIntance.initialState;
         var action = arguments[1];
 
-        var reducerFunction = model.reducers[action.type];
-        return reducerFunction ? reducerFunction(state, action) : state;
+        var reducerFunction = modelIntance.reducers[action.type];
+        var result = reducerFunction ? reducerFunction(state, action) : state;
+        return result ? result : state;
       };
     } else if (typeof value == 'function') {
       return value;
     } else if ((0, _isPlainObject2.default)(value)) {
-      return combineModelReducers(value);
+      return combineModelReducers(modelIntances, value);
     } else {
       throw new Error("The object's each value must be a modelName string or reducer function, or a nested object structure.");
     }
