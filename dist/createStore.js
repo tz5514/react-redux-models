@@ -14,6 +14,10 @@ var _map = require('lodash/map');
 
 var _map2 = _interopRequireDefault(_map);
 
+var _mapValues = require('lodash/mapValues');
+
+var _mapValues2 = _interopRequireDefault(_mapValues);
+
 var _forEach = require('lodash/forEach');
 
 var _forEach2 = _interopRequireDefault(_forEach);
@@ -26,17 +30,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function createStore(_ref) {
   var models = _ref.models,
       reducerStuctrue = _ref.reducerStuctrue,
       enhancer = _ref.enhancer,
-      preloadedState = _ref.preloadedState;
+      initialState = _ref.initialState;
 
   var modelIntances = getInitialModelInstances(models);
   var reducer = (0, _index.combineModelReducers)(modelIntances, reducerStuctrue);
-  var store = (0, _redux.createStore)(reducer, preloadedState, enhancer);
+  var store = (0, _redux.createStore)(reducer, initialState, enhancer);
 
   // bindActions
   for (var modelName in modelIntances) {
@@ -56,10 +58,9 @@ function createStore(_ref) {
 }
 
 function getInitialModelInstances(models) {
-  var modelObjects = models.map(function (Model) {
-    return _defineProperty({}, Model.name, new Model());
+  return (0, _mapValues2.default)(models, function (Model) {
+    return new Model();
   });
-  return Object.assign.apply(Object, [{}].concat(_toConsumableArray(modelObjects)));
 }
 
 function getActions(models, actionOptions) {

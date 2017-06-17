@@ -100,19 +100,18 @@ var connectModel = function connectModel(options) {
 function connect(_ref2) {
   var store = _ref2.store,
       stateSelector = _ref2.stateSelector,
-      actionOptions = _ref2.actions,
-      computedValueOptions = _ref2.computedValues,
+      importActions = _ref2.importActions,
+      importComputedValues = _ref2.importComputedValues,
       _ref2$importDispatch = _ref2.importDispatch,
       importDispatch = _ref2$importDispatch === undefined ? false : _ref2$importDispatch;
 
   var connectParams = [];
 
   // actions    
-  if ((0, _isPlainObject2.default)(actionOptions) && !(0, _isEmpty2.default)(actionOptions)) {
-    // generate mapDispatchToProps function from combinedActions
+  if ((0, _isPlainObject2.default)(importActions) && !(0, _isEmpty2.default)(importActions)) {
     connectParams[1] = function (dispatch) {
       var dispatchObject = importDispatch ? { dispatch: dispatch } : {};
-      return Object.assign(dispatchObject, { actions: store.getActions(actionOptions) });
+      return Object.assign(dispatchObject, { actions: store.getActions(importActions) });
     };
   } else {
     connectParams[1] = function (dispatch) {
@@ -121,16 +120,16 @@ function connect(_ref2) {
   }
 
   // computedValues
-  if ((0, _isPlainObject2.default)(computedValueOptions) && !(0, _isEmpty2.default)(computedValueOptions)) {
+  if ((0, _isPlainObject2.default)(importComputedValues) && !(0, _isEmpty2.default)(importComputedValues)) {
     connectParams[0] = function (state) {
-      var reselectedComputedValues = (0, _mapValues2.default)(store.getComputedValues(computedValueOptions), function (computedValue) {
+      var reselectedComputedValues = (0, _mapValues2.default)(store.getComputedValues(importComputedValues), function (computedValue) {
         return (0, _reselect.createSelector)(computedValue.selectors, computedValue.compute)(state);
       });
 
       return stateSelector ? Object.assign({}, stateSelector(state), reselectedComputedValues) : reselectedComputedValues;
     };
   } else {
-    connectParams[0] = stateSelector;
+    connectParams[0] = stateSelector ? stateSelector : null;
   }
 
   return _reactRedux.connect.apply(undefined, connectParams);

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.AJAX_ACTION_TYPES = exports.createActionTypes = exports.Model = exports.connectModel = exports.combineModelReducers = exports.createStore = exports.wrapProvider = undefined;
+exports.AJAX_ACTION_TYPES = exports.createActionTypes = exports.Model = exports.connectModel = exports.combineModelReducers = exports.createStore = exports.wrapWithProvider = undefined;
 
 var _combineModelReducers = require('./combineModelReducers');
 
@@ -13,9 +13,9 @@ var _connectModel = require('./connectModel');
 
 var _connectModel2 = _interopRequireDefault(_connectModel);
 
-var _wrapProvider = require('./wrapProvider');
+var _wrapWithProvider = require('./wrapWithProvider');
 
-var _wrapProvider2 = _interopRequireDefault(_wrapProvider);
+var _wrapWithProvider2 = _interopRequireDefault(_wrapWithProvider);
 
 var _createActionTypes = require('./createActionTypes');
 
@@ -31,7 +31,7 @@ var _Model2 = _interopRequireDefault(_Model);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.wrapProvider = _wrapProvider2.default;
+exports.wrapWithProvider = _wrapWithProvider2.default;
 exports.createStore = _createStore2.default;
 exports.combineModelReducers = _combineModelReducers2.default;
 exports.connectModel = _connectModel2.default;
