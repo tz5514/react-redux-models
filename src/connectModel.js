@@ -37,18 +37,17 @@ const connectModel = (options) => (WrappedComponent) => {
 export function connect({ 
   store, 
   stateSelector, 
-  actions: actionOptions, 
-  computedValues: computedValueOptions, 
+  importActions, 
+  importComputedValues, 
   importDispatch = false 
 }) {
   let connectParams = [];
   
   // actions    
-  if (isPlainObject(actionOptions) && !isEmpty(actionOptions)) {
-    // generate mapDispatchToProps function from combinedActions
+  if (isPlainObject(importActions) && !isEmpty(importActions)) {
     connectParams[1] = (dispatch) => {
       const dispatchObject = (importDispatch)? { dispatch } : {};
-      return Object.assign(dispatchObject, { actions: store.getActions(actionOptions) })
+      return Object.assign(dispatchObject, { actions: store.getActions(importActions) })
     }; 
   } else {
     connectParams[1] = (dispatch) => {
@@ -57,17 +56,17 @@ export function connect({
   }
 
   // computedValues
-  if (isPlainObject(computedValueOptions) && !isEmpty(computedValueOptions)) {
+  if (isPlainObject(importComputedValues) && !isEmpty(importComputedValues)) {
     connectParams[0] = (state) => {
       const reselectedComputedValues = mapValues(
-        store.getComputedValues(computedValueOptions),
+        store.getComputedValues(importComputedValues),
         (computedValue) => createSelector(computedValue.selectors, computedValue.compute)(state)
       );
       
       return (stateSelector) ? Object.assign({}, stateSelector(state), reselectedComputedValues) : reselectedComputedValues;
     }
   } else {
-    connectParams[0] = stateSelector;
+    connectParams[0] = (stateSelector) ? stateSelector : null;
   }
 
   return reduxConnect(...connectParams);
