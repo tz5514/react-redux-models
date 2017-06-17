@@ -8,7 +8,9 @@ exports.getComputedValues = getComputedValues;
 
 var _redux = require('redux');
 
-var _index = require('generic/modules/react-redux-models/index');
+var _combineModelReducers = require('./combineModelReducers');
+
+var _combineModelReducers2 = _interopRequireDefault(_combineModelReducers);
 
 var _map = require('lodash/map');
 
@@ -37,7 +39,7 @@ function createStore(_ref) {
       initialState = _ref.initialState;
 
   var modelIntances = getInitialModelInstances(models);
-  var reducer = (0, _index.combineModelReducers)(modelIntances, reducerStuctrue);
+  var reducer = (0, _combineModelReducers2.default)(modelIntances, reducerStuctrue);
   var store = (0, _redux.createStore)(reducer, initialState, enhancer);
 
   // bindActions

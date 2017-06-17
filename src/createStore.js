@@ -1,5 +1,5 @@
 import { createStore as reudxCreateStore, bindActionCreators } from 'redux'
-import { combineModelReducers } from 'generic/modules/react-redux-models/index'
+import combineModelReducers from './combineModelReducers'
 import map from 'lodash/map'
 import mapValues from 'lodash/mapValues'
 import forEach from 'lodash/forEach'
