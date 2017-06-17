@@ -13,7 +13,7 @@ export default function combineModelReducers(modelIntances, reducerStuctrue) {
       }
 
       if (!modelIntance.initialState || !modelIntance.reducers) {
-        throw new Error(`Model "${modelName}" muse has declared initialState and reducers.`);
+        throw new Error(`Model "${modelName}" must has declared initialState and reducers.`);
       }
 
       return (state = modelIntance.initialState, action) => {
