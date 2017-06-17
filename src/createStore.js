@@ -1,13 +1,14 @@
 import { createStore as reudxCreateStore, bindActionCreators } from 'redux'
 import { combineModelReducers } from 'generic/modules/react-redux-models/index'
 import map from 'lodash/map'
+import mapValues from 'lodash/mapValues'
 import forEach from 'lodash/forEach'
 import pickBy from 'lodash/pickBy'
 
-export default function createStore({ models, reducerStuctrue, enhancer, preloadedState }) {
+export default function createStore({ models, reducerStuctrue, enhancer, initialState }) {
   let modelIntances = getInitialModelInstances(models);
   const reducer = combineModelReducers(modelIntances, reducerStuctrue);
-  let store = reudxCreateStore(reducer, preloadedState, enhancer);
+  let store = reudxCreateStore(reducer, initialState, enhancer);
 
   // bindActions
   for (let modelName in modelIntances) {
@@ -27,12 +28,7 @@ export default function createStore({ models, reducerStuctrue, enhancer, preload
 }
 
 function getInitialModelInstances(models) {
-  const modelObjects = models.map(Model => {
-    return { 
-      [Model.name]: new Model() 
-    };
-  });
-  return Object.assign({}, ...modelObjects);
+  return mapValues(models, Model => new Model());
 }
 
 function getActions(models, actionOptions) {
