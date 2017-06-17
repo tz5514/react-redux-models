@@ -1,4 +1,4 @@
-import { PureComponent } from 'react'
+import React from 'react'
 import { Provider } from 'react-redux'
 import pickBy from 'lodash/pickBy'
 import createStore from './createStore'
@@ -6,7 +6,7 @@ import createStore from './createStore'
 let memorizedStore;
 const skipMerge = ['initialState', 'initialProps', 'isServer', 'store'];
 
-const wrapWithProvider = (storeOptions) => (WrappedComponent) => class WrapWithProvider extends PureComponent {
+const wrapWithProvider = (storeOptions) => (WrappedComponent) => class WrapWithProvider extends React.PureComponent {
   static async getInitialProps(ctx = {}) {
     ctx.isServer = !!ctx.req;
     ctx.store = initStore(storeOptions, ctx.req);

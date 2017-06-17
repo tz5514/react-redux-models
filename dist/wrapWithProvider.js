@@ -14,6 +14,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _react = require('react');
 
+var _react2 = _interopRequireDefault(_react);
+
 var _reactRedux = require('react-redux');
 
 var _pickBy = require('lodash/pickBy');
@@ -39,8 +41,8 @@ var skipMerge = ['initialState', 'initialProps', 'isServer', 'store'];
 
 var wrapWithProvider = function wrapWithProvider(storeOptions) {
   return function (WrappedComponent) {
-    return function (_PureComponent) {
-      _inherits(WrapWithProvider, _PureComponent);
+    return function (_React$PureComponent) {
+      _inherits(WrapWithProvider, _React$PureComponent);
 
       function WrapWithProvider() {
         _classCallCheck(this, WrapWithProvider);
@@ -66,10 +68,10 @@ var wrapWithProvider = function wrapWithProvider(storeOptions) {
           });
           Object.assign(mergedProps, initialProps);
 
-          return React.createElement(
+          return _react2.default.createElement(
             _reactRedux.Provider,
             { store: store },
-            React.createElement(WrappedComponent, mergedProps)
+            _react2.default.createElement(WrappedComponent, mergedProps)
           );
         }
       }], [{
@@ -149,7 +151,7 @@ var wrapWithProvider = function wrapWithProvider(storeOptions) {
       }]);
 
       return WrapWithProvider;
-    }(_react.PureComponent);
+    }(_react2.default.PureComponent);
   };
 };
 
