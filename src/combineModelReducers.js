@@ -2,8 +2,8 @@ import { combineReducers } from 'redux'
 import mapValues from 'lodash/mapValues'
 import isPlainObject from 'lodash/isPlainObject'
 
-export default function combineModelReducers(modelIntances, reducerStuctrue) {
-  const transformedReducers = mapValues(reducerStuctrue, (value, key) => {
+export default function combineModelReducers(modelIntances, reducerStructure) {
+  const transformedReducers = mapValues(reducerStructure, (value, key) => {
     if (typeof value == 'string') {
       const modelName = value;
       const modelIntance = modelIntances[modelName];

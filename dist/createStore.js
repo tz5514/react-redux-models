@@ -34,7 +34,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 function createStore(_ref) {
   var models = _ref.models,
-      reducerStuctrue = _ref.reducerStuctrue,
+      reducerStructure = _ref.reducerStructure,
       _ref$enhancer = _ref.enhancer,
       enhancer = _ref$enhancer === undefined ? function (func) {
     return func;
@@ -42,7 +42,7 @@ function createStore(_ref) {
       initialState = _ref.initialState;
 
   var modelIntances = getInitialModelInstances(models);
-  var reducer = (0, _combineModelReducers2.default)(modelIntances, reducerStuctrue);
+  var reducer = (0, _combineModelReducers2.default)(modelIntances, reducerStructure);
   var store = (0, _redux.createStore)(reducer, initialState, enhancer);
 
   // bindActions

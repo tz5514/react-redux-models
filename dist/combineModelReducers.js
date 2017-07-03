@@ -17,8 +17,8 @@ var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function combineModelReducers(modelIntances, reducerStuctrue) {
-  var transformedReducers = (0, _mapValues2.default)(reducerStuctrue, function (value, key) {
+function combineModelReducers(modelIntances, reducerStructure) {
+  var transformedReducers = (0, _mapValues2.default)(reducerStructure, function (value, key) {
     if (typeof value == 'string') {
       var modelName = value;
       var modelIntance = modelIntances[modelName];

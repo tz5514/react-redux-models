@@ -5,9 +5,9 @@ import mapValues from 'lodash/mapValues'
 import forEach from 'lodash/forEach'
 import pickBy from 'lodash/pickBy'
 
-export default function createStore({ models, reducerStuctrue, enhancer = (func) => func, initialState }) {
+export default function createStore({ models, reducerStructure, enhancer = (func) => func, initialState }) {
   let modelIntances = getInitialModelInstances(models);
-  const reducer = combineModelReducers(modelIntances, reducerStuctrue);
+  const reducer = combineModelReducers(modelIntances, reducerStructure);
   let store = reudxCreateStore(reducer, initialState, enhancer);
 
   // bindActions
