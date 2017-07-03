@@ -48,7 +48,7 @@ function combineModelReducers(modelIntances, reducerStuctrue) {
     } else if ((0, _isPlainObject2.default)(value)) {
       return combineModelReducers(modelIntances, value);
     } else {
-      throw new Error("The object's each value must be a modelName string or reducer function, or a nested object structure.");
+      throw new Error("Each property value of reducerStructure object must be a modelName string or a reducer function, or a nested object structure.");
     }
   });
 
