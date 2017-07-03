@@ -35,7 +35,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 function createStore(_ref) {
   var models = _ref.models,
       reducerStuctrue = _ref.reducerStuctrue,
-      enhancer = _ref.enhancer,
+      _ref$enhancer = _ref.enhancer,
+      enhancer = _ref$enhancer === undefined ? function (func) {
+    return func;
+  } : _ref$enhancer,
       initialState = _ref.initialState;
 
   var modelIntances = getInitialModelInstances(models);
@@ -72,7 +75,7 @@ function getActions(models, actionOptions) {
     }
 
     if (!models[modelName].actions) {
-      throw new Error('actions of model "' + modelName + '" was undefined.');
+      return {};
     }
 
     var currentModelActions = models[modelName].getOriginalActions();
@@ -104,7 +107,7 @@ function getComputedValues(models, computedValueOptions) {
     }
 
     if (!models[modelName].computedValues) {
-      throw new Error('computedValues of model "' + modelName + '" was undefined.');
+      return {};
     }
 
     var currentModelComputedValues = models[modelName].computedValues;
