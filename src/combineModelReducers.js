@@ -12,8 +12,10 @@ export default function combineModelReducers(modelIntances, reducerStuctrue) {
         throw new Error(`Model "${modelName}" was undefined.`);
       }
 
-      if (!modelIntance.initialState || !modelIntance.reducers) {
-        throw new Error(`Model "${modelName}" must has declared initialState and reducers.`);
+      if (!modelIntance.reducers) {
+        return (state) => state;
+      } else if (!modelIntance.initialState) {
+        throw new Error(`Model "${modelName}" must has declared initialState for reducers.`);
       }
 
       return (state = modelIntance.initialState, action) => {
@@ -21,7 +23,7 @@ export default function combineModelReducers(modelIntances, reducerStuctrue) {
         const result = (reducerFunction)? reducerFunction(state, action) : state;
         return (result) ? result : state;
       }
-    } else if (typeof value == 'function'){
+    } else if (typeof value == 'function') {
       return value;
     } else if (isPlainObject(value)) {
       return combineModelReducers(modelIntances, value);

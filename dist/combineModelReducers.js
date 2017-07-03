@@ -27,8 +27,12 @@ function combineModelReducers(modelIntances, reducerStuctrue) {
         throw new Error('Model "' + modelName + '" was undefined.');
       }
 
-      if (!modelIntance.initialState || !modelIntance.reducers) {
-        throw new Error('Model "' + modelName + '" must has declared initialState and reducers.');
+      if (!modelIntance.reducers) {
+        return function (state) {
+          return state;
+        };
+      } else if (!modelIntance.initialState) {
+        throw new Error('Model "' + modelName + '" must has declared initialState for reducers.');
       }
 
       return function () {
