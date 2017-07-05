@@ -20,8 +20,7 @@ export default function combineModelReducers(modelIntances, reducerStructure) {
 
       return (state = modelIntance.initialState, action) => {
         const reducerFunction = modelIntance.reducers[action.type];
-        const result = (reducerFunction)? reducerFunction(state, action) : state;
-        return (result) ? result : state;
+        return (typeof reducerFunction == 'function')? reducerFunction(state, action) : state;
       }
     } else if (typeof value == 'function') {
       return value;

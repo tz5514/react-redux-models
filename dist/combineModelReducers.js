@@ -40,8 +40,7 @@ function combineModelReducers(modelIntances, reducerStructure) {
         var action = arguments[1];
 
         var reducerFunction = modelIntance.reducers[action.type];
-        var result = reducerFunction ? reducerFunction(state, action) : state;
-        return result ? result : state;
+        return typeof reducerFunction == 'function' ? reducerFunction(state, action) : state;
       };
     } else if (typeof value == 'function') {
       return value;
