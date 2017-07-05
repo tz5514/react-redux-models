@@ -24,6 +24,11 @@ export default function createStore({ models, reducerStructure, enhancer = (func
   }
 
   store.models = modelIntances;
+
+  for (let modelName in store.models) {
+    store.models[modelName].getState = store.getState;
+  }
+  
   return store;
 }
 

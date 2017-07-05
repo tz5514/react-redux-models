@@ -59,6 +59,11 @@ function createStore(_ref) {
   }
 
   store.models = modelIntances;
+
+  for (var _modelName2 in store.models) {
+    store.models[_modelName2].getState = store.getState;
+  }
+
   return store;
 }
 
