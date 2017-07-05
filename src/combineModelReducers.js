@@ -12,9 +12,9 @@ export default function combineModelReducers(modelIntances, reducerStructure) {
         throw new Error(`Model "${modelName}" was undefined.`);
       }
 
-      if (!modelIntance.reducers) {
+      if (typeof modelIntance.reducers == 'undefined') {
         return (state) => state;
-      } else if (!modelIntance.initialState) {
+      } else if (typeof modelIntance.initialState == 'undefined') {
         throw new Error(`Model "${modelName}" must has declared initialState for reducers.`);
       }
 
