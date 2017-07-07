@@ -27,6 +27,7 @@ export default function createStore({ models, reducerStructure, enhancer = (func
 
   for (let modelName in store.models) {
     store.models[modelName].getState = store.getState;
+    Object.defineProperty(store.models[modelName], 'state', { get: store.getState });
   }
   
   return store;

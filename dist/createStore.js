@@ -62,6 +62,7 @@ function createStore(_ref) {
 
   for (var _modelName2 in store.models) {
     store.models[_modelName2].getState = store.getState;
+    Object.defineProperty(store.models[_modelName2], 'state', { get: store.getState });
   }
 
   return store;
