@@ -1,6 +1,6 @@
 {
   "name": "react-redux-models",
-  "version": "0.7.3",
+  "version": "0.8.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -27,6 +27,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-runtime": "^6.23.0",
+    "immutability-helper": "^2.2.3",
     "lodash": "^4.17.4",
     "react-redux": "^5.0.5",
     "redux": "^3.6.0",
