@@ -10,14 +10,13 @@ const wrapWithProvider = (storeOptions) => (WrappedComponent) => class WrapWithP
   static async getInitialProps(ctx = {}) {
     ctx.isServer = !!ctx.req;
     ctx.store = initStore(storeOptions, ctx.req);
-    const initialProps = (WrappedComponent.getInitialProps)? (await WrappedComponent.getInitialProps(ctx)) : {};
 
     return {
-      initialProps,
+      initialProps: (WrappedComponent.getInitialProps)? (await WrappedComponent.getInitialProps(ctx)) : {},
       initialState: ctx.store.getState(),
       store: ctx.store,
       isServer: ctx.isServer
-    }
+    };
   }
   
   render() {

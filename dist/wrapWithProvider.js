@@ -79,7 +79,6 @@ var wrapWithProvider = function wrapWithProvider(storeOptions) {
         value: function () {
           var _ref = _asyncToGenerator(_regenerator2.default.mark(function _callee() {
             var ctx = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-            var initialProps;
             return _regenerator2.default.wrap(function _callee$(_context) {
               while (1) {
                 switch (_context.prev = _context.next) {
@@ -104,15 +103,18 @@ var wrapWithProvider = function wrapWithProvider(storeOptions) {
                     _context.t0 = {};
 
                   case 9:
-                    initialProps = _context.t0;
+                    _context.t1 = _context.t0;
+                    _context.t2 = ctx.store.getState();
+                    _context.t3 = ctx.store;
+                    _context.t4 = ctx.isServer;
                     return _context.abrupt('return', {
-                      initialProps: initialProps,
-                      initialState: ctx.store.getState(),
-                      store: ctx.store,
-                      isServer: ctx.isServer
+                      initialProps: _context.t1,
+                      initialState: _context.t2,
+                      store: _context.t3,
+                      isServer: _context.t4
                     });
 
-                  case 11:
+                  case 14:
                   case 'end':
                     return _context.stop();
                 }
