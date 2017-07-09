@@ -105,36 +105,14 @@ var wrapWithProvider = function wrapWithProvider(storeOptions) {
 
                   case 9:
                     initialProps = _context.t0;
-
-                    if (!WrappedComponent.getInitialProps) {
-                      _context.next = 16;
-                      break;
-                    }
-
-                    _context.next = 13;
-                    return WrappedComponent.getInitialProps(ctx);
-
-                  case 13:
-                    _context.t1 = _context.sent;
-                    _context.next = 17;
-                    break;
-
-                  case 16:
-                    _context.t1 = {};
-
-                  case 17:
-                    _context.t2 = _context.t1;
-                    _context.t3 = ctx.store.getState();
-                    _context.t4 = ctx.store;
-                    _context.t5 = ctx.isServer;
                     return _context.abrupt('return', {
-                      initialProps: _context.t2,
-                      initialState: _context.t3,
-                      store: _context.t4,
-                      isServer: _context.t5
+                      initialProps: initialProps,
+                      initialState: ctx.store.getState(),
+                      store: ctx.store,
+                      isServer: ctx.isServer
                     });
 
-                  case 22:
+                  case 11:
                   case 'end':
                     return _context.stop();
                 }

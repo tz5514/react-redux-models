@@ -13,7 +13,7 @@ const wrapWithProvider = (storeOptions) => (WrappedComponent) => class WrapWithP
     const initialProps = (WrappedComponent.getInitialProps)? (await WrappedComponent.getInitialProps(ctx)) : {};
 
     return {
-      initialProps: (WrappedComponent.getInitialProps)? (await WrappedComponent.getInitialProps(ctx)) : {},
+      initialProps,
       initialState: ctx.store.getState(),
       store: ctx.store,
       isServer: ctx.isServer
